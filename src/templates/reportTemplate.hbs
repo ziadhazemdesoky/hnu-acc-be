@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>تقرير القيود الموافق عليها</title>
+    <style>
+      body {
+        font-family: "Amiri", serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f7f9;
+        color: #333;
+      }
+
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        background: linear-gradient(90deg, #1061ff, #0047ab);
+        color: white;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .header img {
+        height: 60px;
+      }
+
+      .header .title {
+        font-size: 28px;
+        margin: 12px;
+        font-weight: bold;
+      }
+
+      .content {
+        margin: 20px;
+      }
+
+      .filters,
+      .totals {
+        background: white;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .filters p,
+      .totals p {
+        margin: 8px 0;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        border-radius: 10px;
+        overflow: hidden;
+        background: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      table thead {
+        background: linear-gradient(90deg, #0047ab, #1061ff);
+        color: white;
+      }
+
+      table th {
+        padding: 12px;
+        font-size: 14px;
+      }
+
+      table td {
+        padding: 12px;
+        font-size: 13px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+      }
+
+      table tr:nth-child(even) {
+        background: #f9f9f9;
+      }
+
+      .totals .total-row {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+      }
+
+      .totals .total-row span {
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 14px;
+        color: #666;
+        padding: 10px 20px;
+      }
+
+      .footer a {
+        color: #1061ff;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <div class="header">
+      <img src="{{logo}}" alt="University Logo" />
+      <div class="title">جامعة حلوان الأهلية</div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <!-- Filters -->
+      <div class="filters">
+        <p><strong>صانع العملية:</strong> {{operationMaker.name}} ({{operationMaker.makerId}})</p>
+        <p><strong>الفترة الزمنية:</strong> {{startDate}} إلى {{endDate}}</p>
+      </div>
+
+      <!-- Table -->
+      <table>
+        <thead>
+          <tr>
+            <th>رقم القيد</th>
+            <th>البيان</th>
+            <th>كود العملية</th>
+            <th>مركز التكلفة</th>
+            <th>المبلغ الدائن</th>
+            <th>المبلغ المدين</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each records}}
+          <tr>
+            <td>{{this.recordNumber}}</td>
+            <td>{{this.description}}</td>
+            <td>{{this.operationCode.code}} - {{this.operationCode.description}}</td>
+            <td>{{this.operationMaker.makerId}} - {{this.operationMaker.name}}</td>
+            <td>{{this.creditorBalance}}</td>
+            <td>{{this.debitorBalance}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+
+      <!-- Totals -->
+      <div class="totals">
+        <div class="total-row">
+          <span>إجمالي الدائن:</span>
+          <span>{{totalCredit}} جنيه</span>
+        </div>
+        <div class="total-row">
+          <span>إجمالي المدين:</span>
+          <span>{{totalDebit}} جنيه</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>تم إنشاء التقرير باستخدام نظام إدارة القيود</p>
+      <p><a href="https://www.helwan.edu.eg">www.helwan.edu.eg</a></p>
+    </div>
+  </body>
+</html>
